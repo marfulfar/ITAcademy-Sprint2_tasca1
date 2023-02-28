@@ -1,0 +1,57 @@
+***OPTICA***
+
+Factures per client en un rang de dates
+
+SELECT * 
+FROM opticadb.factures fs
+join factura f
+on fs.idFactures = f.idfactura
+join client_individual ci
+on f.idClientFacura = ci.idClient
+where ci.name = 'pepe'
+and (f.dataiHora >= '2023-01-01')
+;
+
+
+
+Models d'ulleres venudes per un empleat en un any
+
+SELECT * 
+FROM opticadb.client_individual ci
+join factura f
+on ci.idClient = f.idClientFacura
+join glasses g
+on f.idGlassesFactura = g.idGlasses
+where ci.attended_by = 1 and (f.dataiHora >= '2023-01-01' and f.dataiHora < '2024-01-01')
+and g.brand = 2
+;
+
+
+Llista els diferents proveïdors que han subministrat ulleres venudes amb èxit per l'òptica.
+
+SELECT name 
+FROM proveidor p
+join glasses_brands gb
+on p.Glasses_brands = gb.idGlasses_brand
+join glasses g
+on gb.idGlasses_brand = g.idGlasses
+join factura f
+on g.idGlasses = f.idGlassesFactura
+where f.idfactura > 0
+;
+
+***PIZZERIA***
+
+Llista quants productes de categoria 'Begudes' s'han venut en una determinada localitat.
+
+SELECT * FROM pizzariadb.drink d
+JOIN pizzariadb.shop s ON d.id = s.orders
+WHERE s.city = 'bcn'
+
+
+
+Llista quantes comandes ha efectuat un determinat empleat/da.
+
+SELECT orders FROM pizzariadb.shops s
+JOIN pizzariadb.workers w ON s.workers = w.id
+WHERE s.workers = 'pepe'
